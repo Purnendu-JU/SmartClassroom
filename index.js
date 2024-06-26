@@ -16,14 +16,14 @@ const corsOptions = {
     credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization', 'auth']
 }
-app.use(cors(corsOptions))
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, auth');
   next(); // Add this to ensure proper middleware chaining
 });
-app.use(cors());
+app.use(cors(corsOptions))
+// app.use(cors());
 app.use("/files", express.static("files"));
 app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
