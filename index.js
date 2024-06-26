@@ -14,12 +14,12 @@ const corsOptions = {
     origin: "*",
     methods: "GET, POST, PUT, DELETE, PATCH, HEAD",
     credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization', 'auth']
+  allowedHeaders: ['Content-Type', 'Authorization', 'auth', 'auth-token']
 }
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, auth');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, auth, auth-token');
   next(); // Add this to ensure proper middleware chaining
 });
 app.use(cors(corsOptions))
