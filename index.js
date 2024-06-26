@@ -10,13 +10,7 @@ async function main() {
 main();
 const app = express();
 const port = process.env.PORT;
-app.use(cors(
-  {
-    origin: ["https://smart-classroom-frontend.vercel.app/"],
-    methods: ["POST", "GET", "PUT"],
-    credentials: true
-  }
-));
+app.use(cors());
 app.use("/files", express.static("files"));
 app.use(express.json());
 app.use('/api/auth', require('./routes/auth'));
