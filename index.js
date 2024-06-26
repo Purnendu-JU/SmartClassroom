@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT;
 app.use(cors(
   {
-    origin: ["https://smartclassroom.vercel.app"],
+    origin: ["https://smart-classroom-frontend.vercel.app"],
     methods: ["POST", "GET", "PUT"],
     credentials: true
   }
