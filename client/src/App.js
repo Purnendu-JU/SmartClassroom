@@ -42,7 +42,6 @@ const RoleBasedRedirect = ({ path }) => {
             },
           });
           const data = await res.json();
-          console.log(data.role);
           setRole(data.role);
           if (data.role === 'teacher') {
             if (path === 'assignment') navigate('/tassignment');
@@ -81,7 +80,7 @@ const App = () => {
         <Route path="/chatbot" element={<PrivateRoute element={<Chatbot />} />} />
         <Route path="/home" element={<PrivateRoute element={<Home />} />} />
         <Route path="/announcement" element={<PrivateRoute element={<AnnouncementSection />} />} />
-        <Route path="/insideclass" element={<PrivateRoute element={<InsideClass />} />} />
+        <Route path="/insideclass/:classname/:subjectname" element={<PrivateRoute element={<InsideClass />} />} />
         <Route path="/joinclass" element={<PrivateRoute element={<JoinClass />} />} />
         <Route path="/createclass" element={<PrivateRoute element={<CreateClass />} />} />
         <Route path="/editprofile" element={<PrivateRoute element={<EditProfile />} />} />
