@@ -49,7 +49,7 @@ const Home = () => {
                 <Typography color="textSecondary">Teacher: {`${classInfo.user.fname} ${classInfo.user.lname}`}</Typography>
               </CardContent>
               <Button variant="contained" color="primary" fullWidth>
-                <Link to="/insideclass" style={{ textDecoration: 'none', color: 'white' }}>Enter Class</Link>
+                <Link to={`/insideclass/${classInfo.Cname}/${classInfo.Sname}`} style={{ textDecoration: 'none', color: 'white' }}>Enter Class</Link>
               </Button>
             </Card>
           </Grid>
