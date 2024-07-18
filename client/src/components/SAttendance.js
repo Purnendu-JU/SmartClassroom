@@ -27,7 +27,7 @@ const SAttendance = () => {
         setIsAttendanceMarked(true);
         alert('Marked');
         // window.location.href = '/insideclass';
-        navigate('/insideclass', { replace: true });
+        navigate('/landing', { replace: true });
       } 
       else if(res.status === 401){
         alert('Incorrect attendance code. Please try again.');
