@@ -5,9 +5,11 @@ import AnnouncementIcon from '@mui/icons-material/Announcement';
 import PeopleIcon from '@mui/icons-material/People';
 import EventAvailableIcon from '@mui/icons-material/EventAvailable';
 import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Nav from './Nav';
 
 const InsideClass = () => {
+  const { classname, subjectname } = useParams();
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
   const [className, setClassName] = useState('');
@@ -15,33 +17,52 @@ const InsideClass = () => {
     const fetchRoleAndClass = async () => {
       try {
         const token = localStorage.getItem('token');
+        const resClass = await fetch('https://backend-classroom.vercel.app/api/auth/getclass', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'auth-token': token
+          },
+          body: JSON.stringify({ Cname: classname, Sname: subjectname })
+        });
+        const json = await resClass.json();
+  
+        if (resClass.status === 200 && json.success) {
+          localStorage.removeItem('classToken');
+          localStorage.setItem('classToken', json.auth);
+          setClassName(json.name);
+        } else {
+          console.error('Error in getClass:', json.error);
+          alert(json.error || "Invalid credentials");
+          return;
+        }
+  
         const classToken = localStorage.getItem('classToken');
         if (token && classToken) {
           const resRole = await fetch('https://backend-classroom.vercel.app/api/auth/getrole', {
+            method: 'GET',
             headers: {
               'auth-token': token,
               'auth': classToken
             },
           });
           const roleData = await resRole.json();
-          setRole(roleData.role);
-
-          const resClass = await fetch('https://backend-classroom.vercel.app/api/auth/getclass', {
-            headers: {
-              'auth': classToken
-            },
-          });
-          const classData = await resClass.json();
-          setClassName(classData.Cname);
+  
+          if (resRole.status === 200) {
+            setRole(roleData.role);
+          } else {
+            console.error('Error in getRole:', roleData.error);
+          }
         }
-      } 
-      catch (err) {
-        console.error(err);
+      } catch (err) {
+        console.error('Error in fetchRoleAndClass:', err);
       }
     };
-
+  
     fetchRoleAndClass();
-  }, []);
+  }, [classname, subjectname]);
+  
+  
 
   const handleNavigation = (path) => {
     if (role === 'teacher') {
